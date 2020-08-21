@@ -1,6 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
+
+mongoose.connect('mongodb+srv://lyes:root@cluster0.oxcjj.mongodb.net/<dbname>?retryWrites=true&w=majority',
+    { useNewUrlParser: true,
+        useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -9,7 +17,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/api/stuff', (req, res, next) => {
+app.use(bodyParser.json());
+
+app.get('/api/stuff', (req, res, next) => {
     const stuff = [
         {
             _id: 'oeihfzeoi',
@@ -29,6 +39,13 @@ app.use('/api/stuff', (req, res, next) => {
         },
     ];
     res.status(200).json(stuff);
+});
+
+app.post('/api/stuff', (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({
+        message: 'Objet créé !'
+    });
 });
 
 
