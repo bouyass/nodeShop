@@ -10,6 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
+
 mongoose.connect('mongodb+srv://lyes:root@cluster0.crezr.mongodb.net/<dbname>?retryWrites=true&w=majority',
     { useNewUrlParser: true,
         useUnifiedTopology: true })
